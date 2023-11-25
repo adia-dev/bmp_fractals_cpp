@@ -48,3 +48,6 @@ Here are some demo images generated with this project:
 
 ### Mandelbrot Fractal:
 ![Mandelbrot](out/mandelbrot.bmp)
+
+### Julia Fractal:
+![Julia](out/julia.bmp)

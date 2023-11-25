@@ -3,10 +3,11 @@
 #include <cmath>
 #include <cstdint>
 #include <objects/complex.h>
+#include <utility>
 
 namespace Fractals {
 namespace Mandelbrot {
-static double generate(double x, double y, uint16_t max_iterations = 256) {
+static std::pair<double, uint16_t> generate(double x, double y, uint16_t max_iterations = 256) {
   Complex z;
   Complex c(x, y);
 
@@ -19,7 +20,7 @@ static double generate(double x, double y, uint16_t max_iterations = 256) {
   double smooth_iteration_counter =
       ((double)i - std::log2(std::log2(z.sq_mag())));
 
-  return (smooth_iteration_counter / ((double)max_iterations));
+  return std::make_pair((smooth_iteration_counter / ((double)max_iterations)), i);
 }
 } // namespace Mandelbrot
 } // namespace Fractals
