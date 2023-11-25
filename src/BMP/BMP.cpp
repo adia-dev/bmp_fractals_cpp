@@ -32,9 +32,9 @@ BMP::BMP(uint32_t width, uint32_t height) {
   info_header.image_size = bmp_size;
 }
 
-BMP::BMP(uint32_t width, uint32_t height, Pixel color) : BMP(width, height) {
-  for (int y = 0; y < height; ++y) {
-    for (int x = 0; x < width; ++x) {
+BMP::BMP(uint32_t width, uint32_t height, RGBColor color) : BMP(width, height) {
+  for (size_t y = 0; y < height; ++y) {
+    for (size_t x = 0; x < width; ++x) {
       uint32_t index = (y * width + x) * 3;
 
       data[index] = color.blue;
@@ -47,8 +47,8 @@ BMP::BMP(uint32_t width, uint32_t height, Pixel color) : BMP(width, height) {
 BMP::BMP(uint32_t width, uint32_t height, uint8_t color[3])
     : BMP(width, height) {
 
-  for (int y = 0; y < height; ++y) {
-    for (int x = 0; x < width; ++x) {
+  for (size_t y = 0; y < height; ++y) {
+    for (size_t x = 0; x < width; ++x) {
       uint32_t index = (y * width + x) * 3;
 
       data[index] = color[0];
@@ -58,28 +58,28 @@ BMP::BMP(uint32_t width, uint32_t height, uint8_t color[3])
   }
 }
 
-void BMP::set_pixel(uint32_t x, uint32_t y, uint8_t pixel[3]) {
+void BMP::set_pixel(uint32_t x, uint32_t y, uint8_t color[3]) {
   if (x < 0 || x >= info_header.width || y < 0 || y >= info_header.height) {
     std::cerr << "Error: Pixel coordinates out of bounds\n";
     return;
   }
 
   uint32_t index = (y * info_header.width + x) * 3;
-  data[index] = pixel[0];
-  data[index + 1] = pixel[1];
-  data[index + 2] = pixel[2];
+  data[index] = color[0];
+  data[index + 1] = color[1];
+  data[index + 2] = color[2];
 }
 
-void BMP::set_pixel(uint32_t x, uint32_t y, const Pixel &pixel) {
+void BMP::set_pixel(uint32_t x, uint32_t y, const RGBColor &color) {
   if (x < 0 || x >= info_header.width || y < 0 || y >= info_header.height) {
     std::cerr << "Error: Pixel coordinates out of bounds\n";
     return;
   }
 
   uint32_t index = (y * info_header.width + x) * 3;
-  data[index] = pixel.blue;
-  data[index + 1] = pixel.green;
-  data[index + 2] = pixel.red;
+  data[index] = color.blue;
+  data[index + 1] = color.green;
+  data[index + 2] = color.red;
 }
 
 void BMP::write(const std::string &filename) {
@@ -95,10 +95,18 @@ void BMP::write(const std::string &filename) {
   file.write(reinterpret_cast<const char *>(&header), sizeof(header));
   file.write(reinterpret_cast<const char *>(&info_header), sizeof(info_header));
 
-  for (int y = 0; y < info_header.height; ++y) {
+  for (size_t y = 0; y < info_header.height; ++y) {
     file.write(
         reinterpret_cast<const char *>(data.get() + y * info_header.width * 3),
         info_header.width * 3);
     file.write(padding_data, padding);
+  }
+}
+
+void BMP::for_each_pixels(std::function<void(uint32_t, uint32_t)> fn) {
+  for (size_t y = 0; y < info_header.height; ++y) {
+    for (size_t x = 0; x < info_header.width; ++x) {
+        fn(x, y);
+    }
   }
 }
