@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cmath>
 struct Complex {
   double re;
   double im;
@@ -18,6 +19,8 @@ struct Complex {
     return {this->re * other.re - this->im * other.im,
             this->re * other.im + this->im * other.re};
   }
+
+  Complex abs() const { return {std::abs(this->re), std::abs(this->im)}; }
 
   double sq_mag() const { return this->re * this->re + this->im * this->im; }
 };

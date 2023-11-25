@@ -62,6 +62,30 @@ struct RGBColor {
     return palette;
   }
 
+  static std::vector<RGBColor> red_orange_palette() {
+    static std::vector<RGBColor> palette{
+        {255, 0, 0},   {255, 69, 0},  {255, 99, 71}, {255, 140, 0},
+        {255, 165, 0}, {255, 215, 0}, {255, 255, 0}, {255, 127, 80},
+        {255, 69, 0},  {255, 48, 48}};
+    return palette;
+  }
+
+  static std::vector<RGBColor> blue_green_palette() {
+    static std::vector<RGBColor> palette{
+        {0, 0, 128},    {0, 0, 139},    {0, 0, 205},   {0, 0, 128},
+        {70, 130, 180}, {32, 178, 170}, {0, 139, 139}, {0, 128, 128},
+        {0, 206, 209},  {0, 191, 255}};
+    return palette;
+  }
+
+  static std::vector<RGBColor> green_palette() {
+    static std::vector<RGBColor> palette{
+        {0, 128, 0},    {0, 139, 69},  {0, 205, 102}, {34, 139, 34},
+        {60, 179, 113}, {85, 107, 47}, {0, 250, 154}, {0, 255, 127},
+        {0, 128, 128},  {46, 139, 87}};
+    return palette;
+  }
+
   void print() const {
     printf("RGBColor { r: %u, g: %u, b: %u }\n", red, green, blue);
   }

@@ -49,5 +49,8 @@ Here are some demo images generated with this project:
 ### Mandelbrot Fractal:
 ![Mandelbrot](out/mandelbrot.bmp)
 
-### Julia Fractal:
+### Julia Fractal(Purple Color Palette):
 ![Julia](out/julia.bmp)
+
+### Burning Ship Fractal(Blue/Green Color Palette):
+![Burning Ship](out/burning_ship.bmp)
